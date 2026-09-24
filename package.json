@@ -1,0 +1,23 @@
+{
+  "name": "house-cleaner-playable",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build Your Dream House - exterior renovation playable ad (three.js + pixi.js)",
+  "scripts": {
+    "dev": "playable-scripts dev --port 3000",
+    "build": "playable-scripts build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@smoud/playable-sdk": "^1.2.0",
+    "howler": "^2.2.4",
+    "pixi.js": "^7.4.3",
+    "three": "^0.186.0"
+  },
+  "devDependencies": {
+    "@smoud/playable-scripts": "^1.2.14",
+    "@types/howler": "^2.2.13",
+    "@types/three": "^0.186.0",
+    "typescript": "^5.9.3"
+  }
+}

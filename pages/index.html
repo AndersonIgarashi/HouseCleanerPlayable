@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Build Your Dream House · Playable Ad</title>
+    <meta name="description" content="Playable ad demo: clean the yard, rebuild the house and paint it. Built with three.js and pixi.js." />
+    <meta property="og:title" content="Build Your Dream House · Playable Ad" />
+    <meta property="og:description" content="Clean the yard, rebuild the house and paint it. three.js + pixi.js playable ad." />
+    <link rel="icon" href="favicon.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --navy: #26214a;
+        --navy-2: #2e3563;
+        --sky-top: #4fa9ef;
+        --sky-bottom: #d6efff;
+        --grass: #74c94e;
+        --grass-dark: #57ae3c;
+        --green: #3db51f;
+        --green-light: #7fe449;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: 'Nunito', system-ui, sans-serif;
+        color: var(--navy);
+        background: linear-gradient(180deg, var(--sky-top) 0%, #92d1fb 45%, var(--sky-bottom) 70%);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        left: -20vw;
+        right: -20vw;
+        bottom: -38vh;
+        height: 62vh;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at 50% 20%, var(--grass) 0%, var(--grass-dark) 70%);
+        z-index: -1;
+      }
+
+      main {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(32px, 6vw, 96px);
+        padding: 32px 24px;
+      }
+
+      .info {
+        max-width: 420px;
+        text-align: center;
+      }
+
+      .info img {
+        width: min(360px, 80%);
+        height: auto;
+        filter: drop-shadow(0 10px 18px rgba(38, 33, 74, 0.25));
+        animation: bob 3.2s ease-in-out infinite;
+      }
+
+      .info p {
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: 600;
+        margin: 18px 0 8px;
+      }
+
+      .tech {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 16px 0 26px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .tech li {
+        font-size: 13px;
+        font-weight: 800;
+        color: #fff;
+        background: var(--navy-2);
+        border-radius: 999px;
+        padding: 5px 12px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .btn {
+        font-family: 'Lilita One', system-ui, sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        color: #fff;
+        text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        padding: 12px 22px 14px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--green-light), var(--green));
+        box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.45), 0 6px 0 #1d6e10, 0 10px 18px rgba(0, 0, 0, 0.18);
+        text-shadow: 0 2px 0 #1d6e10;
+        transition: transform 0.12s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px) scale(1.03);
+      }
+
+      .btn:active {
+        transform: translateY(3px) scale(0.97);
+      }
+
+      .btn.secondary {
+        background: linear-gradient(180deg, #5a6aa8, var(--navy-2));
+        box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.25), 0 6px 0 #1b2150, 0 10px 18px rgba(0, 0, 0, 0.18);
+        text-shadow: 0 2px 0 #1b2150;
+      }
+
+      .hint {
+        margin-top: 22px;
+        font-size: 14px;
+        opacity: 0.75;
+      }
+
+      .phone {
+        position: relative;
+        flex: none;
+        height: min(88vh, 880px);
+        aspect-ratio: 9 / 19.5;
+        padding: 12px;
+        border-radius: 48px;
+        background: #14162a;
+        box-shadow: 0 0 0 2px #2c3050, 0 30px 60px rgba(20, 22, 42, 0.45);
+      }
+
+      .phone iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 36px;
+        background: var(--sky-bottom);
+      }
+
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-1deg);
+        }
+        50% {
+          transform: translateY(-8px) rotate(1deg);
+        }
+      }
+
+      @media (max-width: 900px) and (min-width: 641px) {
+        main {
+          flex-direction: column;
+        }
+      }
+
+      /* On phones the playable takes the whole screen */
+      @media (max-width: 640px) {
+        body::after,
+        .info {
+          display: none;
+        }
+
+        main {
+          padding: 0;
+        }
+
+        .phone {
+          position: fixed;
+          inset: 0;
+          height: 100dvh;
+          width: 100vw;
+          aspect-ratio: auto;
+          padding: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+
+        .phone iframe {
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="info">
+        <img src="logo.webp" alt="Build Your Dream House" width="537" height="567" />
+        <p>Playable ad: sweep the junk out of the yard, watch the house get rebuilt, then paint the walls and the roof your way.</p>
+        <ul class="tech">
+          <li>three.js</li>
+          <li>pixi.js</li>
+          <li>TypeScript</li>
+          <li>Blender</li>
+          <li>Procedural audio</li>
+        </ul>
+        <div class="actions">
+          <a class="btn" href="play.html">Play full screen</a>
+          <button class="btn secondary" id="restart" type="button">Restart</button>
+          <a class="btn secondary" href="https://github.com/AndersonIgarashi/HouseCleanerPlayable">Source</a>
+        </div>
+        <p class="hint">Turn the sound on. Works with mouse or touch.</p>
+      </section>
+      <div class="phone">
+        <iframe id="game" src="play.html" title="Build Your Dream House playable" allow="autoplay; fullscreen"></iframe>
+      </div>
+    </main>
+    <script>
+      document.getElementById('restart').addEventListener('click', function () {
+        var frame = document.getElementById('game');
+        frame.src = 'play.html?t=' + Date.now();
+      });
+    </script>
+  </body>
+</html>

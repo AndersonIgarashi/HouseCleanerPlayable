@@ -1,0 +1,10 @@
+{
+  "filename": "{app}_{name}_{version}_{network}",
+  "app": "DreamHouse",
+  "name": "HouseCleanerExterior",
+  "version": "v1",
+  "language": "en",
+  "orientation": "both",
+  "googlePlayUrl": "https://play.google.com/store/games",
+  "appStoreUrl": "https://www.apple.com/app-store/"
+}
