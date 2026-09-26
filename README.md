@@ -11,11 +11,23 @@ three.js renders the 3D scene, pixi.js renders the 2D UI/FX on a transparent can
 ```bash
 npm install
 npm run dev      # http://localhost:3000 (the LAN address is printed too, for phones)
-npm run build    # single inlined HTML in dist/
+npm run build    # single inlined HTML in dist/ (1.97 MB)
 npm run typecheck
 ```
 
 Every push to `main` runs `.github/workflows/pages.yml`, which builds the playable and publishes it to GitHub Pages together with the showcase page in `pages/index.html` (phone frame on desktop, full screen on phones). The raw playable is served as `play.html`.
+
+## Build size
+
+The build is one self-contained HTML file of 1,969,286 bytes (1.97 MB), under the 2 MB cap of the strictest ad networks. It started at 2.5 MB:
+
+| Change | Where |
+|---|---|
+| Only the pixi packages the UI uses, instead of the full `pixi.js` bundle | `src/core/pixi.ts` |
+| The Node `url` polyfill stubbed out (only pixi's deprecated `utils.url` imported it) | `build.js` |
+| Lilita One subset to printable ASCII as woff2 (26.8 KB → 6 KB) | `assets/fonts/` |
+| WebP sprites re-encoded from the source PNGs at quality 80 | `assets/images/` |
+| GLBs quantized (14-bit positions, 8-bit normals) and meshopt-compressed | `tools/optimize-glb.mjs` |
 
 ## Code
 
@@ -25,7 +37,7 @@ Every push to `main` runs `.github/workflows/pages.yml`, which builds the playab
 | `src/config.ts` | Tunables: steps, paint palettes, sweep radius, auto-finish thresholds, camera, haptics, store rules |
 | `src/world/World3D.ts` | three.js scene: GLB loading (meshopt), one shared atlas material, responsive camera framing, debris sweeping, clipping-plane paint wipe, flowers, camera swing |
 | `src/ui/*` | pixi UI: top bar (level + progress), step bar, color palette, broom/roller tools, tutorial hand, particles (dust, sparkles, confetti, paint), end card |
-| `src/core/*` | tween engine (squash & stretch helpers), sound, asset imports |
+| `src/core/*` | tween engine (squash & stretch helpers), sound, asset imports, the pixi package list |
 
 Painting works by keeping the painted and unpainted houses on top of each other and clipping them against a moving plane pair along the camera's right axis, so each pixel shows exactly one of them.
 
@@ -46,6 +58,12 @@ The Blender scene with every asset laid out is `Files/Blender/HouseCleaner.blend
 
 Re-running the `build_*.py` / `export_all.py` generators would regenerate the meshes and drop those manual edits.
 
+Exported GLBs are not ready to ship yet: run them through the optimizer (its header lists the npm packages it needs):
+
+```bash
+node tools/optimize-glb.mjs ../Files/GLB assets/models
+```
+
 ## How It Was Built (AI Workflow)
 
 Every asset and most of the code came out of an AI-driven pipeline that I directed. Claude Code wrote the game code and drove Blender through the Blender MCP to build the models. I wrote the brief, made the art and scope calls, and fixed what the generators got wrong.
@@ -64,4 +82,5 @@ Every asset and most of the code came out of an AI-driven pipeline that I direct
 - **One atlas.** Flat colors through one shared atlas keep the whole scene on a single texture and material.
 - **Scope.** This version is exterior only, and the mock's title screen was cut: a playable starts on the first tap.
 - **Fixing the generated meshes.** I found z-fighting in the generated models and fixed `painted_trim`, `ground_mesh` and `broken_damage` by hand in Blender. The pipeline then re-exports from the `.blend` instead of regenerating, which is why the `.blend` is the source of truth.
+- **A 2 MB budget.** I capped the build at 2 MB, the limit of the strictest ad networks, when it was 2.5 MB. The cuts that got it to 1.97 MB are listed in [Build size](#build-size).
 - **Playable by anyone.** I asked for a public web build, which became the Pages workflow and the phone-frame showcase.
