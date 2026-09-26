@@ -45,3 +45,23 @@ The Blender scene with every asset laid out is `Files/Blender/HouseCleaner.blend
 ```
 
 Re-running the `build_*.py` / `export_all.py` generators would regenerate the meshes and drop those manual edits.
+
+## How It Was Built (AI Workflow)
+
+Every asset and most of the code came out of an AI-driven pipeline that I directed. Claude Code wrote the game code and drove Blender through the Blender MCP to build the models. I wrote the brief, made the art and scope calls, and fixed what the generators got wrong.
+
+| Stage | Tool | What it did |
+| --- | --- | --- |
+| Brief | Me, from a reference mock | The three states of the house, the debris, every 2D element, and the animation direction |
+| 3D models | Claude Code + Blender MCP (bpy) | Scripts that model the broken, unpainted and painted house, the debris and the props, colored through one flat 128-color atlas and exported as one meshopt `.glb` per asset |
+| 2D UI and VFX sprites | Claude Code → Blender renders + Pillow | Icons rendered in Blender, then outlined and composited into panels, buttons, the logo and particle sprites |
+| Audio | Claude Code → numpy + lamejs | Sound effects and the music loop synthesized in code and encoded to MP3 |
+| Game | Claude Code | three.js scene, pixi.js UI, tween engine, game flow and the GitHub Pages deploy |
+
+### My calls
+
+- **The brief.** I specified three versions of the house: broken; rebuilt but unpainted, with desaturated colors and small imperfections; and painted in vivid, clean colors. I also listed the debris (tires, boxes, rocks…) and every 2D element, and asked for squash and stretch on everything that moves.
+- **One atlas.** Flat colors through one shared atlas keep the whole scene on a single texture and material.
+- **Scope.** This version is exterior only, and the mock's title screen was cut: a playable starts on the first tap.
+- **Fixing the generated meshes.** I found z-fighting in the generated models and fixed `painted_trim`, `ground_mesh` and `broken_damage` by hand in Blender. The pipeline then re-exports from the `.blend` instead of regenerating, which is why the `.blend` is the source of truth.
+- **Playable by anyone.** I asked for a public web build, which became the Pages workflow and the phone-frame showcase.
