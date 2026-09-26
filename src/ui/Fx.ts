@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from '../core/pixi';
 import { Ease, EaseFn } from '../core/tween';
 import { rand, pick } from '../core/utils';
 

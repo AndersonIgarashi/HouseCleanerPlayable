@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from '../core/pixi';
 import { FONT_FAMILY } from '../core/assets';
 
 export const NAVY = 0x26214a;

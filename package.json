@@ -5,13 +5,22 @@
   "description": "Build Your Dream House - exterior renovation playable ad (three.js + pixi.js)",
   "scripts": {
     "dev": "playable-scripts dev --port 3000",
-    "build": "playable-scripts build",
+    "build": "node build.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@pixi/app": "^7.4.3",
+    "@pixi/core": "^7.4.3",
+    "@pixi/display": "^7.4.3",
+    "@pixi/events": "^7.4.3",
+    "@pixi/graphics": "^7.4.3",
+    "@pixi/mesh": "^7.4.3",
+    "@pixi/mesh-extras": "^7.4.3",
+    "@pixi/mixin-get-global-position": "^7.4.3",
+    "@pixi/sprite": "^7.4.3",
+    "@pixi/text": "^7.4.3",
     "@smoud/playable-sdk": "^1.2.0",
     "howler": "^2.2.4",
-    "pixi.js": "^7.4.3",
     "three": "^0.186.0"
   },
   "devDependencies": {

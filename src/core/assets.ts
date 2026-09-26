@@ -73,7 +73,7 @@ import sfx_transform from 'assets/sounds/sfx_transform.mp3';
 import sfx_whoosh from 'assets/sounds/sfx_whoosh.mp3';
 import sfx_win from 'assets/sounds/sfx_win.mp3';
 
-import lilita from 'assets/fonts/LilitaOne-Regular.ttf';
+import lilita from 'assets/fonts/LilitaOne-Regular.woff2';
 
 export const FONT_FAMILY = 'Lilita One';
 export const FontResource = lilita as string;

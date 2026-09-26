@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from '../core/pixi';
 import { Ease, Tween, tweens } from '../core/tween';
 import { Fx } from './Fx';
 

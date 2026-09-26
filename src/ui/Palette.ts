@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from '../core/pixi';
 import { Ease, tweens } from '../core/tween';
 import { hexToNum } from '../core/utils';
 import { label, sprite } from './common';

@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from '../core/pixi';
 import { StepId, config } from '../config';
 import { Ease, tweens } from '../core/tween';
 import { fitSprite, label, sprite } from './common';

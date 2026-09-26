@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from '../core/pixi';
 import { config } from '../config';
 import { ImagesResources } from '../core/assets';
 import { Ease, tweens } from '../core/tween';
@@ -52,7 +52,7 @@ export class UI {
 
   async load(): Promise<void> {
     const keys = Object.keys(ImagesResources);
-    const list = await Promise.all(keys.map((k) => PIXI.Assets.load<PIXI.Texture>(ImagesResources[k])));
+    const list = await Promise.all(keys.map((k) => PIXI.Texture.fromURL(ImagesResources[k])));
     keys.forEach((k, i) => (this.tex[k] = list[i]));
     this.build();
   }
